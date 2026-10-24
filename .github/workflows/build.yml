@@ -19,11 +19,11 @@ jobs:
           distribution: temurin
           java-version: "25"
 
-      # The project has no Gradle wrapper, and Fabric Loom 1.18 needs a recent Gradle 9.x,
+      # The project has no Gradle wrapper, and Fabric Loom 1.18.4 needs Gradle 9.7+,
       # so pin the Gradle version instead of relying on whatever the runner ships.
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: "9.5.1"
+          gradle-version: "9.7.0"
 
       - name: Extract project
         run: |
