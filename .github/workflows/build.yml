@@ -12,10 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
+      # Fabric Loom 1.18 itself needs a Java 25 JVM to run Gradle. The mod is still compiled
+      # for Java 21 (options.release = 21 in build.gradle), which is what Minecraft 1.21.11 uses.
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: "21"
+          java-version: "25"
 
       # The project has no Gradle wrapper, and Fabric Loom 1.18 needs a recent Gradle 9.x,
       # so pin the Gradle version instead of relying on whatever the runner ships.
