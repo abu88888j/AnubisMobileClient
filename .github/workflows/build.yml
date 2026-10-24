@@ -1,8 +1,10 @@
-
 name: Build Minecraft Client
 
 on:
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -15,7 +17,11 @@ jobs:
           distribution: temurin
           java-version: "21"
 
+      # The project has no Gradle wrapper, and Fabric Loom 1.18 needs a recent Gradle 9.x,
+      # so pin the Gradle version instead of relying on whatever the runner ships.
       - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "9.5.1"
 
       - name: Extract project
         run: |
@@ -32,6 +38,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: AnubisMobileClient-JAR
-          path: project/**/build/libs/*.jar
+          path: |
+            project/**/build/libs/*.jar
+            !project/**/build/libs/*-sources.jar
           if-no-files-found: error
-concurrency: 
